@@ -11,25 +11,29 @@ public class App {
 
   get("/", (request, response) -> {
   HashMap<String, Object> model = new HashMap<String, Object>();
-  model.put("tasks", request.session().attribute("tasks"));
+  model.put("placesList", request.session().attribute("placesList"));
 
   model.put("template", "templates/index.vtl");
   return new ModelAndView(model, layout);
   }, new VelocityTemplateEngine());
 
-  post("/tasks", (request, response) -> {
+  post("/places", (request, response) -> {
     HashMap<String, Object> model = new HashMap<String, Object>();
-    ArrayList<Task> tasks = request.session().attribute("tasks");
+    ArrayList<Places> placesList = request.session().attribute("placesList");
 
-    if (tasks == null) {
-      tasks = new ArrayList<Task>();
-      request.session().attribute("tasks", tasks);
+    if (placesList == null) {
+      placesList = new ArrayList<Places>();
+      request.session().attribute("placesList", placesList);
     }
 
+    // getting user input info and assign to a String
     String description = request.queryParams("description");
-    Task newTask = new Task(description);
 
-    tasks.add(newTask);
+    // pass the string value into our method
+    Places myPlaces = new Places(description);
+
+    //adding the value of each "description" into the array
+    placesList.add(myPlaces);
 
     model.put("template", "templates/success.vtl");
     return new ModelAndView(model, layout);

@@ -1,10 +1,9 @@
-public class Task {
+public class Places {
 
   private String mDescription;
 
-  public Task(String description) {
+  public Places(String description) {
     mDescription = description;
-
   }
 
   public String getDescription() {
